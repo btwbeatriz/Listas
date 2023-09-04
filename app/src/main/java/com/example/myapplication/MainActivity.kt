@@ -1,8 +1,9 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
@@ -11,22 +12,79 @@ class MainActivity : AppCompatActivity() {
         "Direito", "Design Digital", "Engenharia Civil"
     )
 
+    private var userList = arrayListOf(
+        Usuario(
+            nome = "Beatriz Fernandes",
+            email = "email@email.com",
+            matricula = "123456",
+            cpf = "98765432100",
+            genero = "FEM",
+            dtNasc = "25/06/1997",
+            curso = list[0],
+            fotoUrl = "https://play-lh.googleusercontent.com/S70rI7VrwLic7_p-ax7iAOOopQhcPCzmqyLe5RLJmApTpkgTRaCwWsTNN1Uv1t_t3Pp5"
+        ),
+        Usuario(
+            nome = "Beatriz Fernandes",
+            email = "email@email.com",
+            matricula = "123456",
+            cpf = "98765432100",
+            genero = "FEM",
+            dtNasc = "25/06/1997",
+            curso = list[1],
+            fotoUrl = "https://play-lh.googleusercontent.com/S70rI7VrwLic7_p-ax7iAOOopQhcPCzmqyLe5RLJmApTpkgTRaCwWsTNN1Uv1t_t3Pp5"
+        ),
+        Usuario(
+            nome = "Beatriz Fernandes",
+            email = "email@email.com",
+            matricula = "123456",
+            cpf = "98765432100",
+            genero = "FEM",
+            dtNasc = "25/06/1997",
+            curso = list[2],
+            fotoUrl = "https://play-lh.googleusercontent.com/S70rI7VrwLic7_p-ax7iAOOopQhcPCzmqyLe5RLJmApTpkgTRaCwWsTNN1Uv1t_t3Pp5"
+        ),
+        Usuario(
+            nome = "Beatriz Fernandes",
+            email = "email@email.com",
+            matricula = "123456",
+            cpf = "98765432100",
+            genero = "FEM",
+            dtNasc = "25/06/1997",
+            curso = list[3],
+            fotoUrl = "https://play-lh.googleusercontent.com/S70rI7VrwLic7_p-ax7iAOOopQhcPCzmqyLe5RLJmApTpkgTRaCwWsTNN1Uv1t_t3Pp5"
+        ),
+        Usuario(
+            nome = "Beatriz Fernandes",
+            email = "email@email.com",
+            matricula = "123456",
+            cpf = "98765432100",
+            genero = "FEM",
+            dtNasc = "25/06/1997",
+            curso = list[4],
+            fotoUrl = "https://play-lh.googleusercontent.com/S70rI7VrwLic7_p-ax7iAOOopQhcPCzmqyLe5RLJmApTpkgTRaCwWsTNN1Uv1t_t3Pp5"
+        ),
+    )
+
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupListView(list)
+        setupListView(userList)
     }
 
-    private fun setupListView(cursos: ArrayList<String>) {
+    private fun setupListView(usuarios: ArrayList<Usuario>) {
         val adapter = MyAdapter()
         adapter.clickListener = {
-            cursos.remove(it) //remove o item e add(it) replica os itens da lista
-            adapter.notifyDataSetChanged()
+            val intent = Intent()
+            intent.putExtra("", it)
+
+            println(it.fotoUrl)
         }
-        adapter.submitList(cursos)
+        adapter.submitList(usuarios)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
     }
 }
