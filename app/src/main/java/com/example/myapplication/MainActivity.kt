@@ -7,6 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.gson.Gson
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -79,23 +85,51 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListView(usuarios: ArrayList<Usuario>) {
-        val adapter = MyAdapter()
-        adapter.clickListener = {
-            val intent = Intent(this, SecondActivity::class.java)
+    //        val adapter = MyAdapter()
+//        adapter.clickListener = {
+//            val intent = Intent(this, SecondActivity::class.java)
+//            intent.putExtra("USUARIO", it)
+//            startActivity(intent)
+//
+//            val prefs = this.getSharedPreferences("", Context.MODE_PRIVATE)
+//
+//            val usuarioString = Gson().toJson(it).toString()
+//
+//            prefs.edit().putString("USUARIO", usuarioString).apply()
+//
+//        }
+//        adapter.submitList(usuarios)
+//        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+//        binding.recyclerView.adapter = adapter
+    }
 
-            intent.putExtra("USUARIO", it)
-
-            startActivity(intent)
-
-            val prefs = this.getSharedPreferences("", Context.MODE_PRIVATE)
-
-            val usuarioString = Gson().toJson(it).toString()
-
-            prefs.edit().putString("USUARIO", usuarioString).apply()
-        }
-
-        adapter.submitList(usuarios)
+    private fun getData() {
+        val adapter = PokemonAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
+
+        val url = "https://pokeapi.co/api/v2/pokemon"
+        val client = OkHttpClient()
+        val builder = Request.Builder()
+        builder.url(url)
+
+        val request = builder.build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseToJson = Gson()
+                    .fromJson(
+                        response.body?.string(),
+                        PokemonResponse::class.java
+                    )
+                runOnUiThread {
+                    adapter.submitList(responseToJson.results)
+                }
+            }
+        })
     }
 }
