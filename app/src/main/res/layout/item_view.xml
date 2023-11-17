@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewUserFoto"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/imageViewUserFoto"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Beatriz Fernandes" />
+        tools:text="Caio Silva" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewUserEmail"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="FEM" />
+        tools:text="MASC" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewUserDtNasc"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/textViewUserGenero"
         app:layout_constraintTop_toBottomOf="@id/textViewUserGenero"
-        tools:text="25/06/1997" />
+        tools:text="11/04/1989" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewUserCurso"

@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.model.Pokemon
-import com.example.myapplication.model.PokemonCompleteData
 import com.example.myapplication.viewmodel.PokemonViewModel
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
     private val viewModel = PokemonViewModel()
@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         setupObservers()
         viewModel.getPokemonList()
-        viewModel.getPokemonFromDatabase()
-        viewModel.observeRealtimeDatabase()
     }
 
     private fun setupObservers() {
@@ -43,19 +41,11 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.pokemonData.observe(this) {
             val intent = Intent(this, SecondActivity::class.java)
+            val string = Gson().toJson(it)
             intent.putExtra("POKEMON_COMPLETE_DATA", it)
 
-            openSecondActivity(intent)
-            savePokemonToDatabase(it)
+            startActivity(intent)
         }
-    }
-
-    private fun openSecondActivity(intent: Intent) {
-        startActivity(intent)
-    }
-
-    private fun savePokemonToDatabase(pokemonCompleteData: PokemonCompleteData) {
-        viewModel.deletePokemopnFromDatabase(pokemonCompleteData)
     }
 
     private fun setupRecyclerView() {
